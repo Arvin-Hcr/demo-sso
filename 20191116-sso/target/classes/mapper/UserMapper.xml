@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aaa.lee.sso.mapper.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.aaa.lee.sso.model.User" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="head_pic_path" property="headPicPath" jdbcType="VARCHAR" />
+    <result column="new_file_name" property="newFileName" jdbcType="VARCHAR" />
+    <result column="original_file_name" property="originalFileName" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from db_user
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.aaa.lee.sso.model.User" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into db_user (username, password, head_pic_path, 
+      new_file_name, original_file_name)
+    values (#{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{headPicPath,jdbcType=VARCHAR}, 
+      #{newFileName,jdbcType=VARCHAR}, #{originalFileName,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.aaa.lee.sso.model.User" >
+    update db_user
+    set username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      head_pic_path = #{headPicPath,jdbcType=VARCHAR},
+      new_file_name = #{newFileName,jdbcType=VARCHAR},
+      original_file_name = #{originalFileName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select id, username, password, head_pic_path, new_file_name, original_file_name
+    from db_user
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, username, password, head_pic_path, new_file_name, original_file_name
+    from db_user
+  </select>
+  <select id="selectUsernameAndPassword" parameterType="com.aaa.lee.sso.model.User" resultMap="BaseResultMap">
+    select * from db_user where username = #{username} and password = #{password}
+  </select>
+</mapper>

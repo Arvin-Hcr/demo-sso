@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+    <script type="text/javascript" src="static/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="static/jquery.cookie.js"></script>
+    <script type="text/javascript">
+        /**
+         * 也就是当页面一旦渲染完毕，就会直接先启动ajax，判断用户是否已经处于登录状态
+         */
+        $(function () {
+            // 1.获取当前页面的地址(index, 在其他页面)
+            //href="XXX"赋值跳转页面，不赋值为当前页面
+            var currentPage = window.location.href;
+            // 2.需要填充a标签的href属性
+            // prop, attr(自己查，为各种标签赋值)
+            // 第一种情况，获取值
+            // 第二种情况，赋值
+            $("#turn_login_page").prop("href", "http://127.0.0.1:8082/turnLoginPage?returnUrl="+currentPage);
+            // 3.判断用户是否处于登录状态
+                // 第一种情况，用户没有登录--->显示a标签
+                // 第二种情况，用户已经处于登录状态--->隐藏a标签，显示欢迎语
+            // 3.1.获取cookie的key值
+            var redisKey = $.cookie("COOKIE_KEY");
+            // 3.2.判断redisKey是否存在
+            // 在java中!只能判断Boolean类型，在js中!可以判断是否为null
+            if(!redisKey) {
+                // 说明redisKey为null，也就是说cookieValue为null，也就是说没有存cookie，也就是说用户没有登录
+                return;
+            }
+            // 4.说明rediskey不为null，则直接需要跳转到登录项目中的验证方法进行验证
+            $.ajax({
+                url : "http://127.0.0.1:8082/token/" + redisKey,
+                type : "get",
+                dataType : "jsonp", // 只有jsonp才可以跨域请求
+                success : function (data) {
+                    // 说明用户已经处于登录状态
+                    // 返回的值一定是userString对象(自己规定)
+                    // 也就是说需要把登录的a标签隐藏了，显示欢迎语
+                    // welcome:用户名(zhangsan, lisi, wangwu, zhaoliu, tianqi)
+                    // "username:zhangsan, password:null, age:25" ---> substring
+                    var user = JSON.parse(data);
+                    // {username : zhangsan, password : null, age : 25}  user.username
+                    $("#login_div").empty();
+                    $("#login_div").append("<h1>Welcome:"+user.username+"</h1>");
+                }
+            })
+
+        });
+    </script>
+</head>
+<body>
+    <div id="login_div">
+        <a id="turn_login_page" href="">登录</a>
+    </div>
+    <a href="/buyPhone">买手机</a>
+</body>
+</html>

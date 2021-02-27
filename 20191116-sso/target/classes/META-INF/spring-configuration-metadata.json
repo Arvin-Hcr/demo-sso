@@ -1,0 +1,32 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "sourceType": "com.aaa.lee.sso.config.RedisProperties",
+      "name": "spring.redis",
+      "type": "com.aaa.lee.sso.config.RedisProperties"
+    }
+  ],
+  "properties": [
+    {
+      "sourceType": "com.aaa.lee.sso.config.RedisProperties",
+      "name": "spring.redis.command-timeout",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.aaa.lee.sso.config.RedisProperties",
+      "name": "spring.redis.expire",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.aaa.lee.sso.config.RedisProperties",
+      "name": "spring.redis.max-attmpts",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.aaa.lee.sso.config.RedisProperties",
+      "name": "spring.redis.nodes",
+      "type": "java.lang.String"
+    }
+  ]
+}

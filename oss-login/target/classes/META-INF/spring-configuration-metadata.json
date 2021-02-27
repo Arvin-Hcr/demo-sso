@@ -1,0 +1,32 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "sourceType": "com.arvin.oss.config.RedisProperties",
+      "name": "spring.redis",
+      "type": "com.arvin.oss.config.RedisProperties"
+    }
+  ],
+  "properties": [
+    {
+      "sourceType": "com.arvin.oss.config.RedisProperties",
+      "name": "spring.redis.command-timeout",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.arvin.oss.config.RedisProperties",
+      "name": "spring.redis.expire",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.arvin.oss.config.RedisProperties",
+      "name": "spring.redis.max-attmpts",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.arvin.oss.config.RedisProperties",
+      "name": "spring.redis.nodes",
+      "type": "java.lang.String"
+    }
+  ]
+}

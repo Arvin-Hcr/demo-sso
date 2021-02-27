@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <script type="text/javascript" src="/static/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript">
+        // 登录成功后，需要直接返回到returnUrl
+        // 也就是说必须要先从controller中获取returnUrl的数据
+        // val(),text()-->区别的是什么？(自己查)
+        // val()只能获取有value属性的标签值(所有的form表单标签)
+        // 其他的所有的标签都必须要用text()
+        $(function () {
+            var returnPage = $("#current_page").text();
+            // 2.执行登录操作--->实现ajax
+            $("#do_login").click(function () {
+                $.post("/doLogin", $("#forms").serialize(), function (data) {
+                    if(data != null) {
+                        // 登录成功
+                        location.href = returnPage;
+                    } else {
+                        // 登录失败，直接返回主页面
+                        location.href = "http://127.0.0.1:8081";
+                    }
+                })
+            });
+        });
+    </script>
+</head>
+<body>
+    <form id="forms">
+        Username:<input type="text" name="username" /> <br />
+        Password:<input type="password" name="password" /> <br />
+        <input id="do_login" type="button" value="Submit" />
+    </form>
+    <span id="current_page" style="display: none;" th:text="${returnUrl}"></span>
+</body>
+</html>
